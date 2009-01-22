@@ -11,7 +11,8 @@
 
 #include "JoeSmith.h"
 
-GLfloat scaled = 1.0;
+GLfloat x_rot = 1.0, y_rot = 0.0, z_rot = 0.0;
+GLfloat rotated = 0.0;
 
 
 /*  Initialize material property, light source, lighting model,
@@ -63,7 +64,7 @@ void display(void)
 
 void idle()
 {
-	//glRotatef(rotated, x_rot, y_rot, z_rot); break;
+	//glRotatef((rotated+=1.0)%360.0, x_rot, y_rot, z_rot);
 	display();
 }
 
@@ -95,17 +96,27 @@ void menu_choice(GLint selected)
 {
 	switch(selected)
 	{
-		case TWO: glScalef(scaled*= 2.0, scaled*= 2.0, scaled*= 2.0); break;
-		case HALF: glScalef(scaled*= 0.5, scaled*= 0.5, scaled*= 0.5); break; 
+		case TWO: 
+		{
+			glScalef(2.0, 2.0, 2.0);
+			display();
+			break;
+		}
+		case HALF: 
+		{
+			glScalef(0.5, 0.5, 0.5); 
+			display();
+			break;
+		}
 
 		case UP: break;
 		case DOWN: break;
 		case LEFT: break;
 		case RIGHT: break;
 
-		case X: break;
-		case Y: break;
-		case Z: break;
+		case X: x_rot = 1.0, y_rot = 0.0, z_rot = 0.0; break;
+		case Y: x_rot = 0.0, y_rot = 1.0, z_rot = 0.0; break;
+		case Z: x_rot = 0.0, y_rot = 0.0, z_rot = 1.0; break;
 	}
 }
 
