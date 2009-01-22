@@ -12,8 +12,6 @@
 #include "JoeSmith.h"
 
 GLfloat x_rot = 1.0, y_rot = 0.0, z_rot = 0.0;
-GLfloat rotated = 0.0;
-
 
 /*  Initialize material property, light source, lighting model,
  *  and depth buffer.
@@ -64,7 +62,7 @@ void display(void)
 
 void idle()
 {
-	//glRotatef((rotated+=1.0)%360.0, x_rot, y_rot, z_rot);
+	glRotatef(1.0, x_rot, y_rot, z_rot);
 	display();
 }
 
@@ -114,9 +112,27 @@ void menu_choice(GLint selected)
 		case LEFT: break;
 		case RIGHT: break;
 
-		case X: x_rot = 1.0, y_rot = 0.0, z_rot = 0.0; break;
-		case Y: x_rot = 0.0, y_rot = 1.0, z_rot = 0.0; break;
-		case Z: x_rot = 0.0, y_rot = 0.0, z_rot = 1.0; break;
+		case X: 
+		{
+			x_rot = 1.0;
+			y_rot = 0.0; 
+			z_rot = 0.0;
+			break;
+		}
+		case Y: 
+		{
+			x_rot = 0.0;
+			y_rot = 1.0; 
+			z_rot = 0.0;
+			break;
+		}
+		case Z: 
+		{
+			x_rot = 0.0;
+			y_rot = 0.0; 
+			z_rot = 1.0;
+			break;
+		}
 	}
 }
 
