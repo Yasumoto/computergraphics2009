@@ -11,6 +11,8 @@
 
 #include "JoeSmith.h"
 
+GLfloat scaled = 1.0;
+
 
 /*  Initialize material property, light source, lighting model,
  *  and depth buffer.
@@ -50,12 +52,19 @@ void init(void)
 void display(void)
 {
    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   // this sure makes life easy
-   glutSolidTeapot (0.80);
+
+	glutSolidCube(1);
+
    glFlush ();
    // Never forget to swap buffers when GL_DOUBLE
    // is on
    glutSwapBuffers();
+}
+
+void idle()
+{
+	//glRotatef(rotated, x_rot, y_rot, z_rot); break;
+	display();
 }
 
 /*
@@ -86,8 +95,8 @@ void menu_choice(GLint selected)
 {
 	switch(selected)
 	{
-		case TWO: break;
-		case HALF: break;
+		case TWO: glScalef(scaled*= 2.0, scaled*= 2.0, scaled*= 2.0); break;
+		case HALF: glScalef(scaled*= 0.5, scaled*= 0.5, scaled*= 0.5); break; 
 
 		case UP: break;
 		case DOWN: break;
@@ -133,6 +142,9 @@ int main(int argc, char** argv)
 
    glutDisplayFunc(display); 
    glutReshapeFunc(reshape);
+
+	glutIdleFunc(idle);
+
    glutMainLoop();
    return 0;
 }
