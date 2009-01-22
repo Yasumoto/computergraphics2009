@@ -97,20 +97,34 @@ void menu_choice(GLint selected)
 		case TWO: 
 		{
 			glScalef(2.0, 2.0, 2.0);
-			display();
 			break;
 		}
 		case HALF: 
 		{
 			glScalef(0.5, 0.5, 0.5); 
-			display();
 			break;
 		}
 
-		case UP: break;
-		case DOWN: break;
-		case LEFT: break;
-		case RIGHT: break;
+		case UP:
+		{
+			glTranslatef(0.0, 1.0, 0.0);
+			break;
+		}
+		case DOWN:
+		{
+			glTranslatef(0.0, -1.0, 0.0);
+			break;
+		}
+		case LEFT:
+		{
+			glTranslatef(-1.0, 0.0, 0.0);
+			break;
+		}
+		case RIGHT:
+		{
+			glTranslatef(1.0, 0.0, 0.0);
+			break;
+		}
 
 		case X: 
 		{
