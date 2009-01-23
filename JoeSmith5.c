@@ -84,6 +84,7 @@ void reshape (int w, int h)
       glOrtho (-1.5*(GLfloat)w/(GLfloat)h,
          1.5*(GLfloat)w/(GLfloat)h, -1.5, 1.5, -10.0, 10.0);
    glMatrixMode(GL_MODELVIEW);
+   glPushMatrix();
    glLoadIdentity();
 }
 
@@ -97,32 +98,42 @@ void menu_choice(GLint selected)
 		case TWO: 
 		{
 			glScalef(2.0, 2.0, 2.0);
+			glPushMatrix();
 			break;
 		}
 		case HALF: 
 		{
 			glScalef(0.5, 0.5, 0.5); 
+			glPushMatrix();
 			break;
 		}
 
 		case UP:
 		{
+			glPopMatrix();
 			glTranslatef(0.0, 1.0, 0.0);
+			glPushMatrix();
 			break;
 		}
 		case DOWN:
 		{
+			glPopMatrix();
 			glTranslatef(0.0, -1.0, 0.0);
+			glPushMatrix();
 			break;
 		}
 		case LEFT:
 		{
+			glPopMatrix();
 			glTranslatef(-1.0, 0.0, 0.0);
+			glPushMatrix();
 			break;
 		}
 		case RIGHT:
 		{
+			glPopMatrix();
 			glTranslatef(1.0, 0.0, 0.0);
+			glPushMatrix();
 			break;
 		}
 
