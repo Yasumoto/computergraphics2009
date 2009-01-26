@@ -2,11 +2,11 @@
  * Chapman University
  * Joe Smith
  * 0949140
- * 01/16/09
+ * 01/22/09
  *
- * Assignment 4
+ * Assignment 6
  * Header file
- * Intro to 3D
+ * The Solar System
  */
 
 #include <stdio.h>
@@ -27,5 +27,4 @@
 #define WINDOW_WIDTH WIDTH
 #define WINDOW_HEIGHT HEIGHT
 
-// How far to go with recursive points
-#define DEPTH 5000
+void earth();
