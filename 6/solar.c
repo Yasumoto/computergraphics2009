@@ -10,9 +10,9 @@
  */
 
 #include "JoeSmith.h"
-GLfloat eyeX = 0.0;  
-GLfloat eyeY = 0.0;  
-GLfloat eyeZ = 1.0;  
+GLfloat eyeX = 1.0;  
+GLfloat eyeY = 1.0;  
+GLfloat eyeZ = 0.0;  
 GLfloat centerX = 0.0;
 GLfloat centerY = 1.0;
 GLfloat centerZ = 0.0;
@@ -22,7 +22,7 @@ GLfloat upZ = 0.0;;
 
 GLfloat x_rot = 1.0, y_rot = 0.0, z_rot = 0.0;
 
-GLint earth_rotate = 0;
+GLfloat earth_orbit = 0.0;
 
 /*  Initialize material property, light source, lighting model,
  *  and depth buffer.
@@ -32,8 +32,8 @@ void init(void)
    glMatrixMode (GL_PROJECTION);
    glLoadIdentity();
 	GLfloat h = 100.0, w = 100.0;
-	glOrtho (-1.5, 1.5, -1.5*(GLfloat)h/(GLfloat)w,
- 		1.5*(GLfloat)h/(GLfloat)w, -10.0, 10.0);
+	glOrtho (-10.0, 10.0, -2.0*(GLfloat)h/(GLfloat)w,
+ 		2.0*(GLfloat)h/(GLfloat)w, -2.0*(GLfloat)h/(GLfloat)w, -2.0*(GLfloat)h/(GLfloat)w);
    glMatrixMode (GL_MODELVIEW);
 	
    // Change the light color to white
@@ -91,7 +91,7 @@ void display(void)
 	glLoadIdentity();
 	glColor3f(1.0, 1.0, 0.0);
 	glScalef(0.5, 0.5, 0.5);
-	glutWireSphere((GLdouble) 1.0, (GLint)50, (GLint)50);
+	glutSolidSphere((GLdouble) 1.0, (GLint)50, (GLint)50);
 	glPopMatrix();
 
 	earth();
@@ -109,15 +109,19 @@ void earth()
 	glLoadIdentity();
 	glColor3f(0.0, 0.0, 1.0);
 	glScalef(0.5, 0.5, 0.5);
-	glTranslatef((GLfloat)earth_rotate, 0.0, 0.0);
-	glutWireSphere((GLdouble) 0.5, (GLint)50, (GLint)50);
+	glTranslatef(2.0*cos((float)earth_orbit), 2.0*sin((float)earth_orbit), 0.0);
+	glutSolidSphere((GLdouble) 0.5, (GLint)50, (GLint)50);
 	glPopMatrix();
 }
 
 void idle()
 {
-	//earth_rotate = (earth_rotate + 1) % 360;
-	//display();
+	earth_orbit = (earth_orbit + 0.001);
+	if (earth_orbit >= 360.0)
+	{
+		earth_orbit = 0.0;
+	}
+	display();
 }
 
 /*
