@@ -11,8 +11,8 @@
 
 #include "JoeSmith.h"
 GLfloat eyeX = 0.0;  
-GLfloat eyeY = 0.0;  
-GLfloat eyeZ = 5.0;  
+GLfloat eyeY = 3.0;  
+GLfloat eyeZ = 2.0;  
 GLfloat centerX = 0.0;
 GLfloat centerY = 0.0;
 GLfloat centerZ = 0.0;
@@ -85,22 +85,23 @@ void display(void)
 {
    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-   glMatrixMode (GL_PROJECTION);
-   glLoadIdentity();
-	gluPerspective (2.0, 1.0, 1.0, 1.0 );
+   //glMatrixMode (GL_PROJECTION);
+   //glLoadIdentity();
+	//gluPerspective (2.0, 1.0, 1.0, 1.0 );
 
 	glMatrixMode(GL_MODELVIEW);
-   //glLoadIdentity();
+   glLoadIdentity();
 	gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ); 
 
 	//The Sun
 	glPushMatrix();
-	glLoadIdentity();
 	glColor3f(1.0, 1.0, 0.0);
 	glScalef(0.01, 0.01, 0.01);
 	glRotatef(rotation, 0.0, 1.0, 0.0);
+   glDisable(GL_LIGHTING);
 	glutSolidSphere((GLdouble) 2.0, (GLint)20, (GLint)20);
 	glPopMatrix();
+   glEnable(GL_LIGHT1);
 
 	mercury();
 	venus();
@@ -122,7 +123,6 @@ void display(void)
 void mercury()
 {
 	glPushMatrix();
-	glLoadIdentity();
 	glColor3f(1.0, 1.0, 1.0);
 	glScalef(MERCURY_SIZE);
 	glTranslatef(EARTH_DISTANCE*cos((float)mercury_orbit), EARTH_DISTANCE*sin((float)mercury_orbit), 0.0);
@@ -134,7 +134,6 @@ void mercury()
 void venus()
 {
 	glPushMatrix();
-	glLoadIdentity();
 	glColor3f(1.0, 0.0555555, 0.0);
 	glScalef(VENUS_SIZE);
 	glTranslatef(VENUS_DISTANCE*cos((float)venus_orbit), VENUS_DISTANCE*sin((float)venus_orbit), 0.0);
@@ -146,7 +145,6 @@ void venus()
 void earth()
 {
 	glPushMatrix();
-	glLoadIdentity();
 	glColor3f(0.0, 0.0, 1.0);
 	glScalef(EARTH_SIZE);
 	glRotatef(0.0, 1.0, 0.0, rotation);
@@ -158,7 +156,6 @@ void earth()
 void mars()
 {
 	glPushMatrix();
-	glLoadIdentity();
 	glColor3f(1.0, 0.01, 0.0);
 	glScalef(MARS_SIZE);
 	glRotatef(0.0, 1.0, 0.0, rotation);
@@ -170,7 +167,6 @@ void mars()
 void jupiter()
 {
 	glPushMatrix();
-	glLoadIdentity();
 	glColor3f(1.0, 5.0, 0.0);
 	glScalef(JUPITER_SIZE);
 	glRotatef(0.0, 1.0, 0.0, rotation);
@@ -182,7 +178,6 @@ void jupiter()
 void saturn()
 {
 	glPushMatrix();
-	glLoadIdentity();
 	glColor3f(5.0, 1.0, 0.0);
 	glScalef(SATURN_SIZE);
 	glRotatef(0.0, 1.0, 0.0, rotation);
@@ -194,7 +189,6 @@ void saturn()
 void uranus()
 {
 	glPushMatrix();
-	glLoadIdentity();
 	glColor3f(0.0, 1.0, 0.0);
 	glScalef(URANUS_SIZE);
 	glRotatef(0.0, 1.0, 0.0, rotation);
@@ -206,7 +200,6 @@ void uranus()
 void neptune()
 {
 	glPushMatrix();
-	glLoadIdentity();
 	glColor3f(0.0, 0.0, 1.0);
 	glScalef(NEPTUNE_SIZE);
 	glRotatef(0.0, 1.0, 0.0, rotation);
@@ -278,21 +271,20 @@ void idle()
  * and GL_MODELVIEW which I still
  * don't fully understand yet, but it works.
  */
-/*void reshape (int w, int h)
+void reshape (int w, int h)
 {
    glViewport (0, 0, (GLsizei) w, (GLsizei) h);
    glMatrixMode (GL_PROJECTION);
    glLoadIdentity();
-   if (w <= h)
+	gluPerspective (45.0, (GLfloat)w/(GLfloat)h, 0.1, 200.0 ); 
+   /*if (w <= h)
       glOrtho (-1.5, 1.5, -1.5*(GLfloat)h/(GLfloat)w,
          1.5*(GLfloat)h/(GLfloat)w, -10.0, 10.0);
    else
       glOrtho (-1.5*(GLfloat)w/(GLfloat)h,
-         1.5*(GLfloat)w/(GLfloat)h, -1.5, 1.5, -10.0, 10.0);
+         1.5*(GLfloat)w/(GLfloat)h, -1.5, 1.5, -10.0, 10.0);*/
    glMatrixMode(GL_MODELVIEW);
-   glPushMatrix();
-   glLoadIdentity();
-}*/
+}
 
 void keys(unsigned char key, int x, int y)
 {
@@ -318,7 +310,7 @@ int main(int argc, char** argv)
 
    glutDisplayFunc(display); 
    glutKeyboardFunc(keys); 
-   //glutReshapeFunc(reshape);
+   glutReshapeFunc(reshape);
 
 	glutIdleFunc(idle);
 
