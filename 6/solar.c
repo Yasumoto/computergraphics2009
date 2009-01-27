@@ -10,9 +10,13 @@
  */
 
 #include "JoeSmith.h"
+
+/*
+ * The following are used to control the camera
+ */
 GLfloat eyeX = 0.0;  
-GLfloat eyeY = 3.0;  
-GLfloat eyeZ = 2.0;  
+GLfloat eyeY = 20.0;  
+GLfloat eyeZ = 5.0;  
 GLfloat centerX = 0.0;
 GLfloat centerY = 0.0;
 GLfloat centerZ = 0.0;
@@ -22,8 +26,14 @@ GLfloat upZ = 0.0;;
 
 GLfloat x_rot = 1.0, y_rot = 0.0, z_rot = 0.0;
 
+/*
+ * The planets rotate around their axis
+ */
 GLfloat rotation = 0.0;
 
+/*
+ * To allow each planet to orbit at different speeds
+ */
 GLfloat mercury_orbit = 0.0;
 GLfloat venus_orbit = 0.0;
 GLfloat earth_orbit = 0.0;
@@ -38,15 +48,6 @@ GLfloat neptune_orbit = 0.0;
  */
 void init(void) 
 {
-	//GLfloat h = 100.0, w = 100.0;
-	//glOrtho (-10.0, 10.0, -2.0*(GLfloat)h/(GLfloat)w,
- 	//		2.0*(GLfloat)h/(GLfloat)w, -2.0*(GLfloat)h/(GLfloat)w, -2.0*(GLfloat)h/(GLfloat)w);
-   //glMatrixMode (GL_MODELVIEW);
-	//gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ); 
-	//gluPerspective ( fovy, aspect, zNear, zFar ); 
-   //glLoadIdentity();
-	//gluPerspective (20.0, 1.0, 1.0, 100.0 );
-
    // Change the light color to white
    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
    GLfloat mat_shininess[] = { 50.0 };
@@ -85,10 +86,7 @@ void display(void)
 {
    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-   //glMatrixMode (GL_PROJECTION);
-   //glLoadIdentity();
-	//gluPerspective (2.0, 1.0, 1.0, 1.0 );
-
+	// ta-da!
 	glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
 	gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ); 
@@ -96,13 +94,14 @@ void display(void)
 	//The Sun
 	glPushMatrix();
 	glColor3f(1.0, 1.0, 0.0);
-	glScalef(0.01, 0.01, 0.01);
+	glScalef(0.1, 0.1, 0.1);
 	glRotatef(rotation, 0.0, 1.0, 0.0);
    glDisable(GL_LIGHTING);
 	glutSolidSphere((GLdouble) 2.0, (GLint)20, (GLint)20);
 	glPopMatrix();
    glEnable(GL_LIGHT1);
 
+	// Display the planets
 	mercury();
 	venus();
 	earth();
@@ -120,6 +119,9 @@ void display(void)
 }
 
 
+/*
+ * What follows are the planet functions
+ */
 void mercury()
 {
 	glPushMatrix();
@@ -208,6 +210,10 @@ void neptune()
 	glPopMatrix();
 }
 
+/*
+ * Update the orbit position of all planets
+ * Smaller numbers yield slower planets
+ */
 void orbits()
 {
 	mercury_orbit = (mercury_orbit + 0.005);
@@ -258,6 +264,11 @@ void orbits()
 		neptune_orbit = 0.0;
 	}
 }
+
+/*
+ * Update the rotation of the planets,
+ * then calculate orbits, and redisplay
+ */
 void idle()
 {
 	rotation += 0.01;
@@ -267,9 +278,7 @@ void idle()
 
 /*
  * the reshape callback function
- * Does some thngs with GL_PROJECTION
- * and GL_MODELVIEW which I still
- * don't fully understand yet, but it works.
+ * set up the view window
  */
 void reshape (int w, int h)
 {
@@ -277,15 +286,12 @@ void reshape (int w, int h)
    glMatrixMode (GL_PROJECTION);
    glLoadIdentity();
 	gluPerspective (45.0, (GLfloat)w/(GLfloat)h, 0.1, 200.0 ); 
-   /*if (w <= h)
-      glOrtho (-1.5, 1.5, -1.5*(GLfloat)h/(GLfloat)w,
-         1.5*(GLfloat)h/(GLfloat)w, -10.0, 10.0);
-   else
-      glOrtho (-1.5*(GLfloat)w/(GLfloat)h,
-         1.5*(GLfloat)w/(GLfloat)h, -1.5, 1.5, -10.0, 10.0);*/
    glMatrixMode(GL_MODELVIEW);
 }
 
+/*
+ * Set up q to quit, for convenience
+ */
 void keys(unsigned char key, int x, int y)
 {
 	switch (key) {
@@ -297,6 +303,53 @@ void keys(unsigned char key, int x, int y)
 	}
 }
 
+/*
+ * The menu to view different angles
+ */
+void menu(GLint selected)
+{
+	switch(selected)
+	{
+			  //Above
+			  case 1:
+			  {
+					eyeX = 0.0;
+					eyeY = 0.0;
+					eyeZ = 25.0;
+					break;
+			  }
+			  //Below
+			  case 2:
+			  {
+					eyeX = 0.0;
+					eyeY = 0.0;
+					eyeZ = -25.0;
+					break;
+			  }
+			  //Side
+			  case 3:
+			  {
+					eyeX = 20.0;
+					eyeY = 0.0;
+					eyeZ = 0.0;
+					break;
+			  }
+			  //Zoom
+			  case 4:
+			  {    
+					eyeY -= 10.0;
+					break;
+			  }
+			  //Reset
+			  case 5:
+			  {
+					eyeX = 0.0;
+					eyeY = 20.0;
+					eyeZ = 5.0;   
+					break;
+			  }
+	}
+}
 
 int main(int argc, char** argv)
 {
@@ -311,6 +364,18 @@ int main(int argc, char** argv)
    glutDisplayFunc(display); 
    glutKeyboardFunc(keys); 
    glutReshapeFunc(reshape);
+
+	int whole_shebang = glutCreateMenu(menu);
+		glutAddMenuEntry("Above", 1);
+		glutAddMenuEntry("Below", 2);
+		glutAddMenuEntry("Side", 3);
+	
+	glutCreateMenu(menu);
+		glutAddSubMenu("Solar System", whole_shebang);
+		glutAddMenuEntry("Zoom", 4);
+		glutAddMenuEntry("Reset", 5);
+
+   glutAttachMenu(GLUT_RIGHT_BUTTON);
 
 	glutIdleFunc(idle);
 
