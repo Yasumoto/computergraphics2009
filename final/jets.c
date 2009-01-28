@@ -14,9 +14,9 @@
 /*
  * The following are used to control the camera
  */
-GLfloat eyeX = 0.0;  
+GLfloat eyeX = 20.0;  
 GLfloat eyeY = 20.0;  
-GLfloat eyeZ = 5.0;  
+GLfloat eyeZ = 20.0;  
 GLfloat centerX = 0.0;
 GLfloat centerY = 0.0;
 GLfloat centerZ = 0.0;
@@ -24,7 +24,8 @@ GLfloat upX = 0.0;
 GLfloat upY = 1.0;   
 GLfloat upZ = 0.0;;  
 
-GLfloat x_rot = 1.0, y_rot = 0.0, z_rot = 0.0;
+//GLfloat x_rot = 1.0, y_rot = 0.0, z_rot = 0.0;
+float orbit_x = 0.0, orbit_y = 0.0;
 
 /*  Initialize material property, light source, lighting model,
  *  and depth buffer.
@@ -84,7 +85,45 @@ void nose()
 	glPopMatrix();
 }
 
+void wing(float* v1, float* v2, float* v3)
+{
+	glPushMatrix();
+	glBegin(GL_TRIANGLES);
+		glVertex3fv(v1);
+		glVertex3fv(v2);
+		glVertex3fv(v3);
+	glEnd();
+	glPopMatrix();
+}
 
+void wings()
+{
+	glPushMatrix();
+	glTranslatef(-10.0, 0.0, 0.0);
+	glRotatef(45, 0.0, 1.0, 0.0);
+
+	float v1[3] = {0.0, 0.0, 0.0};
+  	float v2[3] = {0.0, 5.0, 0.0};
+	float v3[3] = {1.0, 0.0, 1.0};  
+
+	float v4[3] = {0.0, 0.0, 0.0};
+  	float v5[3] = {0.0, -5.0, 0.0};
+	float v6[3] = {1.0, 0.0, 1.0};  
+
+	float v7[3] = {0.0, 0.0, 0.0};
+  	float v8[3] = {0.0, 0.0, 5.0};
+	float v9[3] = {1.0, 0.0, 1.0};  
+
+	float va[3] = {0.0, 0.0, 0.0};
+  	float vb[3] = {0.0, 0.0, -5.0};
+	float vc[3] = {1.0, 0.0, 1.0};  
+
+	wing(v1, v2, v3);
+	wing(v4, v5, v6);
+	wing(v7, v8, v9);
+	wing(va, vb, vc);
+	glPopMatrix();
+}
 
 void jet()
 {
@@ -93,7 +132,10 @@ void jet()
 	//glScalef(0.1, 0.1, 0.1);
 
 	nose();
+	glColor3f(1.0, 1.0, 1.0);
 	fuselage();
+	glColor3f(1.0, 0.0, 0.0);
+	wings();
 
 	glPopMatrix();
    glEnable(GL_LIGHT1);
@@ -124,7 +166,19 @@ void display(void)
  */
 void idle()
 {
-	eyeX += 0.5;
+	if (orbit_x < 360.0)
+		orbit_x += 0.001;
+	else
+		orbit_x = 0.0;
+	
+	if (orbit_y < 360.0)
+		orbit_y += 0.001;
+	else
+		orbit_y = 0.0;
+		
+	eyeX = 50.0*cos((float)orbit_x);
+	//eyeY = 50.0*sin((float)orbit_y);
+
 	display();
 }
 
