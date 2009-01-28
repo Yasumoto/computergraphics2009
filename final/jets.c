@@ -24,8 +24,9 @@ GLfloat upX = 0.0;
 GLfloat upY = 1.0;   
 GLfloat upZ = 0.0;;  
 
-//GLfloat x_rot = 1.0, y_rot = 0.0, z_rot = 0.0;
 float orbit_x = 0.0, orbit_y = 0.0;
+
+float flame = 1.0;
 
 /*  Initialize material property, light source, lighting model,
  *  and depth buffer.
@@ -58,6 +59,9 @@ void init(void)
    glEnable(GL_LIGHT0);
    glEnable(GL_LIGHT1);
    glEnable(GL_DEPTH_TEST);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_ONE, GL_ONE);
    //glDisable(GL_LIGHTING);
 }
 
@@ -125,6 +129,23 @@ void wings()
 	glPopMatrix();
 }
 
+void flames()
+{
+	glColor3f(1.0, 0.0, 0.0);
+	glRotatef(-90, 0.0, 1.0, 0.0);
+	glTranslatef(0.0, 0.0, 9.5);
+
+	double base = 0.8, height = 3.0;
+	int slices = 10, stacks = 10;
+	glutSolidCone((GLdouble) base, (GLdouble) height*flame, (GLint) slices, (GLint) stacks);
+
+	//glEnable(GL_BLEND);
+	glColor4f(1.0,1.0,0.0,0.9);
+	glutSolidCone((GLdouble) base+0.2, (GLdouble) (height+0.2)*flame, (GLint) slices, (GLint) stacks);
+	//glDisable(GL_BLEND);
+	//glColor4f(1.0,1.0,0.0,1.0);
+}
+
 void missile()
 {
 	glPushMatrix();
@@ -136,6 +157,8 @@ void missile()
 	fuselage();
 	glColor3f(1.0, 0.0, 0.0);
 	wings();
+
+	flames();
 
 	glPopMatrix();
    glEnable(GL_LIGHT1);
@@ -179,6 +202,10 @@ void idle()
 	eyeX = 50.0*cos((float)orbit_x);
 	//eyeY = 50.0*sin((float)orbit_y);
 
+	if (flame >= 1.7)
+			  flame = 1.0;
+	else
+			  flame += 0.01;
 	display();
 }
 
