@@ -197,6 +197,8 @@ void jet()
    wing();
 	glPopMatrix();
 
+	flames();
+
 	glPopMatrix();
 }
 
