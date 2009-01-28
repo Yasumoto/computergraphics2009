@@ -36,9 +36,7 @@ void init(void)
    GLfloat mat_shininess[] = { 50.0 };
 
 	// The position of the light
-	GLfloat light_position[] = { 0.0, 0.0, 0.0, 1.0 };
-
-	GLfloat light_position2[] = { 1.0, 1.0, 0.0, 1.0 };
+	GLfloat light_position[] = { 5.0, 5.0, 5.0, 0.0 };
 
    glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel (GL_SMOOTH);
@@ -52,7 +50,6 @@ void init(void)
 	
    // update the lighting
    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-   glLightfv(GL_LIGHT1, GL_POSITION, light_position2);
 
 
    // Turn on GL settings
@@ -60,6 +57,46 @@ void init(void)
    glEnable(GL_LIGHT0);
    glEnable(GL_LIGHT1);
    glEnable(GL_DEPTH_TEST);
+   //glDisable(GL_LIGHTING);
+}
+
+/*
+ * To make a cylinder, one must work with quadrics.
+ * See page 516 in the red book.
+ */
+void fuselage()
+{
+	glPushMatrix();
+	glRotatef(-90, 0.0, 1.0, 0.0);
+	GLUquadricObj *qobj;
+	qobj = gluNewQuadric();
+	gluCylinder(qobj, 1.0, 1.0, 10.0, 15, 15);
+	glPopMatrix();
+}
+
+void nose()
+{
+	glPushMatrix();
+	glRotatef(90, 0.0, 1.0, 0.0);
+	double base = 1.0, height = 2.0;
+	int slices = 10, stacks = 10;
+	glutSolidCone((GLdouble) base, (GLdouble) height, (GLint) slices, (GLint) stacks);
+	glPopMatrix();
+}
+
+
+
+void jet()
+{
+	glPushMatrix();
+	glColor3f(1.0, 0.0, 0.0);
+	//glScalef(0.1, 0.1, 0.1);
+
+	nose();
+	fuselage();
+
+	glPopMatrix();
+   glEnable(GL_LIGHT1);
 }
 
 /*
@@ -74,15 +111,7 @@ void display(void)
    glLoadIdentity();
 	gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ); 
 
-	//The Sun
-	glPushMatrix();
-	glColor3f(1.0, 1.0, 0.0);
-	glScalef(0.1, 0.1, 0.1);
-	//glRotatef(rotation, 0.0, 1.0, 0.0);
-   glDisable(GL_LIGHTING);
-	glutSolidSphere((GLdouble) 2.0, (GLint)20, (GLint)20);
-	glPopMatrix();
-   glEnable(GL_LIGHT1);
+	jet();
 
    glFlush ();
    // Never forget to swap buffers when GL_DOUBLE
@@ -95,6 +124,7 @@ void display(void)
  */
 void idle()
 {
+	eyeX += 0.5;
 	display();
 }
 
