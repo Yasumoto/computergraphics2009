@@ -125,7 +125,7 @@ void wings()
 	glPopMatrix();
 }
 
-void jet()
+void missile()
 {
 	glPushMatrix();
 	glColor3f(1.0, 0.0, 0.0);
@@ -153,7 +153,7 @@ void display(void)
    glLoadIdentity();
 	gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ); 
 
-	jet();
+	missile();
 
    glFlush ();
    // Never forget to swap buffers when GL_DOUBLE
