@@ -14,12 +14,12 @@
 /*
  * The following are used to control the camera
  */
-GLfloat eyeX = 20.0;  
-GLfloat eyeY = 20.0;  
-GLfloat eyeZ = 20.0;  
-GLfloat centerX = 0.0;
-GLfloat centerY = 0.0;
-GLfloat centerZ = 0.0;
+GLfloat eyeX = 10.0;  
+GLfloat eyeY = 5.0;  
+GLfloat eyeZ = 5.0;  
+GLfloat centerX = 12.0;
+GLfloat centerY = -1.0;
+GLfloat centerZ = 2.0;
 GLfloat upX = 0.0;   
 GLfloat upY = 1.0;   
 GLfloat upZ = 0.0;;  
@@ -142,8 +142,8 @@ void flames()
 	glutSolidCone((GLdouble) base, (GLdouble) height*flame, (GLint) slices, (GLint) stacks);
 
 	glEnable(GL_BLEND);
-	glColor4f(1.0,1.0,0.0,0.9);
-	glutSolidCone((GLdouble) base+0.2, (GLdouble) (height+0.2)*flame, (GLint) slices, (GLint) stacks);
+	glColor4f(1.0,1.0,0.0,0.8);
+	glutSolidCone((GLdouble) base+0.2, (GLdouble) (height+0.8)*flame, (GLint) slices, (GLint) stacks);
 	glDisable(GL_BLEND);
 	//glColor4f(1.0,1.0,0.0,1.0);
 }
@@ -242,8 +242,8 @@ void idle()
 	else
 		orbit_y = 0.0;
 		
-	eyeX = 50.0*cos((float)orbit_x);
-	eyeY = 50.0*sin((float)orbit_y);
+	//eyeX = 50.0*cos((float)orbit_x);
+	//eyeY = 50.0*sin((float)orbit_y);
 
 	if (flame >= 1.7)
 			  flame = 1.0;
