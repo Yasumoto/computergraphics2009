@@ -40,7 +40,7 @@ void init(void)
 	// The position of the light
 	GLfloat light_position[] = { 5.0, 5.0, 5.0, 0.0 };
 
-   glClearColor (0.0, 0.0, 0.0, 0.0);
+   glClearColor (0.7, 0.7, 1.0, 0.0);
    glShadeModel (GL_SMOOTH);
 	
    glEnable(GL_COLOR_MATERIAL);
@@ -178,7 +178,7 @@ void wing()
 void jet()
 {
 	glPushMatrix();
-	glColor3f(0.7, 0.7, 0.7);
+	glColor3f(0.8, 0.8, 0.8);
 	glPushMatrix();
 	glScalef(2.0, 2.0, 2.0);
 	nose();
@@ -188,14 +188,14 @@ void jet()
 	glPushMatrix();
 	glRotatef(90, 1.0, 0.0, 0.0);
 	glScalef(1.3, 1.3, 1.0);
-	glTranslatef(-7.0, -5.0, 0.0);
+	glTranslatef(-7.0, -4.5, 0.0);
    wing();
 	glPopMatrix();
 
 	glPushMatrix();
 	glRotatef(-90, 1.0, 0.0, 0.0);
 	glScalef(1.3, 1.3, 1.0);
-	glTranslatef(-7.0, -5.0, 0.0);
+	glTranslatef(-7.0, -4.5, 0.0);
    wing();
 	glPopMatrix();
 
@@ -243,7 +243,7 @@ void idle()
 		orbit_y = 0.0;
 		
 	eyeX = 50.0*cos((float)orbit_x);
-	//eyeY = 50.0*sin((float)orbit_y);
+	eyeY = 50.0*sin((float)orbit_y);
 
 	if (flame >= 1.7)
 			  flame = 1.0;
