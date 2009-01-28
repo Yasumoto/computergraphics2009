@@ -60,6 +60,8 @@ void init(void)
    glEnable(GL_LIGHT1);
    glEnable(GL_DEPTH_TEST);
 
+	// For more info on blending, see 231 in
+	// the redbook
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_ONE, GL_ONE);
    //glDisable(GL_LIGHTING);
@@ -139,10 +141,10 @@ void flames()
 	int slices = 10, stacks = 10;
 	glutSolidCone((GLdouble) base, (GLdouble) height*flame, (GLint) slices, (GLint) stacks);
 
-	//glEnable(GL_BLEND);
+	glEnable(GL_BLEND);
 	glColor4f(1.0,1.0,0.0,0.9);
 	glutSolidCone((GLdouble) base+0.2, (GLdouble) (height+0.2)*flame, (GLint) slices, (GLint) stacks);
-	//glDisable(GL_BLEND);
+	glDisable(GL_BLEND);
 	//glColor4f(1.0,1.0,0.0,1.0);
 }
 
