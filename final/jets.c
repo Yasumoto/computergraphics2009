@@ -85,7 +85,7 @@ void nose()
 	glPopMatrix();
 }
 
-void wing(float* v1, float* v2, float* v3)
+void fin(float* v1, float* v2, float* v3)
 {
 	glPushMatrix();
 	glBegin(GL_TRIANGLES);
@@ -96,7 +96,7 @@ void wing(float* v1, float* v2, float* v3)
 	glPopMatrix();
 }
 
-void wings()
+void fins()
 {
 	glPushMatrix();
 	glTranslatef(-10.0, 0.0, 0.0);
@@ -118,10 +118,10 @@ void wings()
   	float vb[3] = {0.0, 0.0, -5.0};
 	float vc[3] = {1.0, 0.0, 1.0};  
 
-	wing(v1, v2, v3);
-	wing(v4, v5, v6);
-	wing(v7, v8, v9);
-	wing(va, vb, vc);
+	fin(v1, v2, v3);
+	fin(v4, v5, v6);
+	fin(v7, v8, v9);
+	fin(va, vb, vc);
 	glPopMatrix();
 }
 
@@ -135,10 +135,46 @@ void missile()
 	glColor3f(1.0, 1.0, 1.0);
 	fuselage();
 	glColor3f(1.0, 0.0, 0.0);
-	wings();
+	fins();
 
 	glPopMatrix();
    glEnable(GL_LIGHT1);
+}
+
+void wing()
+{
+	glBegin(GL_TRIANGLES);
+		glVertex3f(0.0, 0.0, 0.0);
+		glVertex3f(0.0, 4.0, 0.0);
+		glVertex3f(5.0, 4.0, 0.0);
+	glEnd();
+}
+
+void jet()
+{
+	glPushMatrix();
+	glColor3f(0.7, 0.7, 0.7);
+	glPushMatrix();
+	glScalef(2.0, 2.0, 2.0);
+	nose();
+	fuselage();
+	//glPopMatrix();
+
+	glPushMatrix();
+	glRotatef(90, 1.0, 0.0, 0.0);
+	glScalef(1.3, 1.3, 1.0);
+	glTranslatef(-7.0, -5.0, 0.0);
+   wing();
+	glPopMatrix();
+
+	glPushMatrix();
+	glRotatef(-90, 1.0, 0.0, 0.0);
+	glScalef(1.3, 1.3, 1.0);
+	glTranslatef(-7.0, -5.0, 0.0);
+   wing();
+	glPopMatrix();
+
+	glPopMatrix();
 }
 
 /*
@@ -153,6 +189,9 @@ void display(void)
    glLoadIdentity();
 	gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ); 
 
+	jet();
+	glTranslatef(15.0, -5.0, 0.0);
+	glScalef(0.2, 0.2, 0.2);
 	missile();
 
    glFlush ();
