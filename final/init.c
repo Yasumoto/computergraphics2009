@@ -36,6 +36,9 @@ int display_missile = 0;
 
 float missile_distance = 2.5;
 
+int explode_awesomeness = 0;
+float explode_x = 0.0;
+
 /*  Initialize material property, light source, lighting model,
  *  and depth buffer.
  */
@@ -92,15 +95,21 @@ void display(void)
 	glPopMatrix();
 	//glTranslatef(10.0, -5.0, 0.0);
 	glScalef(0.3, 0.3, 0.3);
+	if (explode_awesomeness)
+	{
+		explosion(explode_x, explode_awesomeness--);
+	}
+	display_missile = 1;
 	if (display_missile)
 	{
-		glTranslatef(missile_distance+=0.1, 0.0, 0.0);
+		glTranslatef(missile_distance+=0.3, 0.0, -25.0);
 		missile();
-		if (missile_distance >= 800.0)
+		if (missile_distance >= 700.0)
 		{
-			missile_distance = 2.5;
+			explode_x = missile_distance;
+			explode_awesomeness = 5;
+			missile_distance = 3.0;
 			display_missile = 0;
-			explosion();
 		}
 	}
 

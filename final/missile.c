@@ -46,6 +46,16 @@ void fins()
 	glPopMatrix();
 }
 
+void explosion(float explode_x, int explode_awesomeness)
+{
+	glPushMatrix();
+	glColor3f(1.0, 0.0, 0.0);
+	glTranslatef(explode_x, 0.0, 0.0);
+	glutSolidSphere((GLdouble) 5.5, (GLint)20, (GLint)20);
+	glPopMatrix();
+}
+
+
 void missile()
 {
 	glPushMatrix();
