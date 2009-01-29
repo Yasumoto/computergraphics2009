@@ -55,6 +55,35 @@ void wing()
 	glEnd();
 }
 
+void cockpit()
+{
+   GLdouble eqn[4] = {0.0, 1.0, 0.0, 0.0};
+   GLdouble eqn2[4] = {1.0, 0.0, 0.0, 0.0};
+
+   glColor3f (0.0, 0.0, 0.7);
+   glPushMatrix();
+   glTranslatef (-3.0, 0.9, 0.0);
+
+/*    clip lower half -- y < 0          */
+   glClipPlane (GL_CLIP_PLANE0, eqn);
+   glEnable (GL_CLIP_PLANE0);
+/*    clip left half -- x < 0           */
+   glClipPlane (GL_CLIP_PLANE1, eqn2);
+   glEnable (GL_CLIP_PLANE1);
+
+   glRotatef (90.0, 1.0, 0.0, 0.0);
+   glutSolidSphere(0.7, 20, 16);
+
+
+   glDisable (GL_CLIP_PLANE0);
+   glDisable (GL_CLIP_PLANE1);
+	GLUquadricObj *qobj;
+	qobj = gluNewQuadric();
+	gluCylinder(qobj, 10.0, 1.0, 2.0, 15, 15);
+   glPopMatrix();
+}
+
+
 void jet()
 {
 	glPushMatrix();
@@ -64,6 +93,8 @@ void jet()
 	nose();
 	fuselage();
 	//glPopMatrix();
+	cockpit();
+	glColor3f(0.8, 0.8, 0.8);
 
 	glPushMatrix();
 	glRotatef(90, 1.0, 0.0, 0.0);
