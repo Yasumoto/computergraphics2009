@@ -109,8 +109,8 @@ void skyworld()
 	glPushMatrix();
 	glScalef(1000.0, 1000.0, 1000.0);
 	glColor3f(1.0, 1.0, 1.0);
+	glBindTexture(GL_TEXTURE_2D, skybox[4]);
    glBegin(GL_QUADS);		                // begin drawing a cube
-	glBindTexture(GL_TEXTURE_2D, skybox[2]);
    
    // Front Face (note that the texture's corners have to match the quad's corners)
    glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);	// Bottom Left Of The Texture and Quad
@@ -137,8 +137,8 @@ void skyworld()
    glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);	// Top Right Of The Texture and Quad
    glEnd();                                    // done with the polygon.
    
-   glBegin(GL_QUADS);		                // begin drawing a cube
 	glBindTexture(GL_TEXTURE_2D, skybox[1]);
+   glBegin(GL_QUADS);		                // begin drawing a cube
    // Bottom Face       
    glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);	// Top Right Of The Texture and Quad
    glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f, -1.0f, -1.0f);	// Top Left Of The Texture and Quad
@@ -146,7 +146,7 @@ void skyworld()
    glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);	// Bottom Right Of The Texture and Quad
    glEnd();                                    // done with the polygon.
    
-	glBindTexture(GL_TEXTURE_2D, skybox[4]);
+	glBindTexture(GL_TEXTURE_2D, skybox[3]);
    glBegin(GL_QUADS);		                // begin drawing a cube
    // Right face
    glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);	// Bottom Right Of The Texture and Quad
@@ -155,7 +155,7 @@ void skyworld()
    glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);	// Bottom Left Of The Texture and Quad
    glEnd();                                    // done with the polygon.
    
-	glBindTexture(GL_TEXTURE_2D, skybox[3]);
+	glBindTexture(GL_TEXTURE_2D, skybox[2]);
    glBegin(GL_QUADS);		                // begin drawing a cube
    // Left Face
    glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);	// Bottom Left Of The Texture and Quad
@@ -248,7 +248,7 @@ void reshape (int w, int h)
    glViewport (0, 0, (GLsizei) w, (GLsizei) h);
    glMatrixMode (GL_PROJECTION);
    glLoadIdentity();
-	gluPerspective (45.0, (GLfloat)w/(GLfloat)h, 0.1, 2000.0 ); 
+	gluPerspective (45.0, (GLfloat)w/(GLfloat)h, 0.1, 4000.0 ); 
    glMatrixMode(GL_MODELVIEW);
 }
 
@@ -304,14 +304,20 @@ void menu(GLint selected)
 					eyeZ = 0.0;
 					break;
 			  }
-			  //Zoom
+			  //Up
 			  case 4:
 			  {    
 					eyeY += 150.0;
 					break;
 			  }
-			  //Reset
+			  //Down
 			  case 5:
+			  {    
+					eyeY -= 150.0;
+					break;
+			  }
+			  //Reset
+			  case 6:
 			  {
 					eyeX = -50.0;
 					eyeY = 20.0;
@@ -349,8 +355,9 @@ int main(int argc, char** argv)
 	
 	glutCreateMenu(menu);
 		glutAddSubMenu("Jet Views", whole_shebang);
-		glutAddMenuEntry("Move Above", 4);
-		glutAddMenuEntry("Reset", 5);
+		glutAddMenuEntry("Move Up", 4);
+		glutAddMenuEntry("Move Down", 5);
+		glutAddMenuEntry("Reset", 6);
 
    glutAttachMenu(GLUT_RIGHT_BUTTON);
 
