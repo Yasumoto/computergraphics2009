@@ -194,7 +194,7 @@ void menu(GLint selected)
 			  {
 					eyeX = 0.0;
 					eyeY = 0.0;
-					eyeZ = 25.0;
+					eyeZ = 200.0;
 					break;
 			  }
 			  //Below
@@ -202,13 +202,13 @@ void menu(GLint selected)
 			  {
 					eyeX = 0.0;
 					eyeY = 0.0;
-					eyeZ = -25.0;
+					eyeZ = -200.0;
 					break;
 			  }
 			  //Side
 			  case 3:
 			  {
-					eyeX = 20.0;
+					eyeX = 120.0;
 					eyeY = 0.0;
 					eyeZ = 0.0;
 					break;
@@ -216,15 +216,15 @@ void menu(GLint selected)
 			  //Zoom
 			  case 4:
 			  {    
-					eyeY -= 10.0;
+					eyeY += 150.0;
 					break;
 			  }
 			  //Reset
 			  case 5:
 			  {
-					eyeX = 0.0;
+					eyeX = -50.0;
 					eyeY = 20.0;
-					eyeZ = 5.0;   
+					eyeZ = 0.0;   
 					break;
 			  }
 	}
@@ -245,12 +245,12 @@ int main(int argc, char** argv)
    glutReshapeFunc(reshape);
 
 	int whole_shebang = glutCreateMenu(menu);
-		glutAddMenuEntry("Above", 1);
-		glutAddMenuEntry("Below", 2);
-		glutAddMenuEntry("Side", 3);
+		glutAddMenuEntry("Starboard", 1);
+		glutAddMenuEntry("Port", 2);
+		glutAddMenuEntry("Front", 3);
 	
 	glutCreateMenu(menu);
-		glutAddSubMenu("Solar System", whole_shebang);
+		glutAddSubMenu("Jet Views", whole_shebang);
 		glutAddMenuEntry("Zoom", 4);
 		glutAddMenuEntry("Reset", 5);
 
