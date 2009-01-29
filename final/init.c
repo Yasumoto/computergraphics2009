@@ -18,9 +18,9 @@
 /*
  * The following are used to control the camera
  */
-GLfloat eyeX = 10.0;  
-GLfloat eyeY = 5.0;  
-GLfloat eyeZ = 5.0;  
+GLfloat eyeX = -50.0;  
+GLfloat eyeY = 20.0;  
+GLfloat eyeZ = 0.0;  
 GLfloat centerX = 12.0;
 GLfloat centerY = -1.0;
 GLfloat centerZ = 2.0;
@@ -33,6 +33,8 @@ float orbit_x = 0.0, orbit_y = 0.0;
 float flame = 1.0;
 
 int display_missile = 0;
+
+float missile_distance = 2.5;
 
 /*  Initialize material property, light source, lighting model,
  *  and depth buffer.
@@ -79,22 +81,27 @@ void init(void)
 void display(void)
 {
    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   glLoadIdentity();
 
 	// ta-da!
 	glMatrixMode(GL_MODELVIEW);
-   glLoadIdentity();
 	gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ); 
 
 	jet();
 
-	glTranslatef(15.0, -5.0, 0.0);
-	glScalef(0.2, 0.2, 0.2);
-	int i = 0;
-	while (i < display_missile);
+	glPopMatrix();
+	//glTranslatef(10.0, -5.0, 0.0);
+	glScalef(0.3, 0.3, 0.3);
+	if (display_missile)
 	{
+		glTranslatef(missile_distance+=0.1, 0.0, 0.0);
 		missile();
-		printf("%d", i);
-		++i;
+		if (missile_distance >= 800.0)
+		{
+			missile_distance = 2.5;
+			display_missile = 0;
+			explosion();
+		}
 	}
 
    glFlush ();
@@ -108,7 +115,8 @@ void display(void)
  */
 void idle()
 {
-	if (orbit_x < 360.0)
+	// The kookity camera swing code
+	/*if (orbit_x < 360.0)
 		orbit_x += 0.001;
 	else
 		orbit_x = 0.0;
@@ -120,6 +128,7 @@ void idle()
 		
 	eyeX = 50.0*cos((float)orbit_x);
 	eyeY = 50.0*sin((float)orbit_y);
+	*/
 
 	if (flame >= 1.7)
 			  flame = 1.0;
@@ -137,7 +146,7 @@ void reshape (int w, int h)
    glViewport (0, 0, (GLsizei) w, (GLsizei) h);
    glMatrixMode (GL_PROJECTION);
    glLoadIdentity();
-	gluPerspective (45.0, (GLfloat)w/(GLfloat)h, 0.1, 200.0 ); 
+	gluPerspective (45.0, (GLfloat)w/(GLfloat)h, 0.1, 2000.0 ); 
    glMatrixMode(GL_MODELVIEW);
 }
 

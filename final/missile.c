@@ -61,5 +61,5 @@ void missile()
 	flames();
 
 	glPopMatrix();
-   glEnable(GL_LIGHT1);
+   //glEnable(GL_LIGHT1);
 }
