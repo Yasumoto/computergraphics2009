@@ -26,3 +26,5 @@
 
 #define WINDOW_WIDTH WIDTH
 #define WINDOW_HEIGHT HEIGHT
+
+extern float flame;

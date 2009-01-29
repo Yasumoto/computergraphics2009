@@ -1,3 +1,3 @@
 #!/bin/sh
 
-make clean && make && ./jets
+make clean > /dev/null && make > /dev/null && ./jets

@@ -9,6 +9,10 @@
  *
  */
 
+/*
+ * This is the initialization and camera code
+ */
+
 #include "JoeSmith.h"
 
 /*
@@ -27,6 +31,8 @@ GLfloat upZ = 0.0;;
 float orbit_x = 0.0, orbit_y = 0.0;
 
 float flame = 1.0;
+
+int display_missile = 0;
 
 /*  Initialize material property, light source, lighting model,
  *  and depth buffer.
@@ -68,143 +74,6 @@ void init(void)
 }
 
 /*
- * To make a cylinder, one must work with quadrics.
- * See page 516 in the red book.
- */
-void fuselage()
-{
-	glPushMatrix();
-	glRotatef(-90, 0.0, 1.0, 0.0);
-	GLUquadricObj *qobj;
-	qobj = gluNewQuadric();
-	gluCylinder(qobj, 1.0, 1.0, 10.0, 15, 15);
-	glPopMatrix();
-}
-
-void nose()
-{
-	glPushMatrix();
-	glRotatef(90, 0.0, 1.0, 0.0);
-	double base = 1.0, height = 2.0;
-	int slices = 10, stacks = 10;
-	glutSolidCone((GLdouble) base, (GLdouble) height, (GLint) slices, (GLint) stacks);
-	glPopMatrix();
-}
-
-void fin(float* v1, float* v2, float* v3)
-{
-	glPushMatrix();
-	glBegin(GL_TRIANGLES);
-		glVertex3fv(v1);
-		glVertex3fv(v2);
-		glVertex3fv(v3);
-	glEnd();
-	glPopMatrix();
-}
-
-void fins()
-{
-	glPushMatrix();
-	glTranslatef(-10.0, 0.0, 0.0);
-	glRotatef(45, 0.0, 1.0, 0.0);
-
-	float v1[3] = {0.0, 0.0, 0.0};
-  	float v2[3] = {0.0, 5.0, 0.0};
-	float v3[3] = {1.0, 0.0, 1.0};  
-
-	float v4[3] = {0.0, 0.0, 0.0};
-  	float v5[3] = {0.0, -5.0, 0.0};
-	float v6[3] = {1.0, 0.0, 1.0};  
-
-	float v7[3] = {0.0, 0.0, 0.0};
-  	float v8[3] = {0.0, 0.0, 5.0};
-	float v9[3] = {1.0, 0.0, 1.0};  
-
-	float va[3] = {0.0, 0.0, 0.0};
-  	float vb[3] = {0.0, 0.0, -5.0};
-	float vc[3] = {1.0, 0.0, 1.0};  
-
-	fin(v1, v2, v3);
-	fin(v4, v5, v6);
-	fin(v7, v8, v9);
-	fin(va, vb, vc);
-	glPopMatrix();
-}
-
-void flames()
-{
-	glColor3f(1.0, 0.0, 0.0);
-	glRotatef(-90, 0.0, 1.0, 0.0);
-	glTranslatef(0.0, 0.0, 9.5);
-
-	double base = 0.8, height = 3.0;
-	int slices = 10, stacks = 10;
-	glutSolidCone((GLdouble) base, (GLdouble) height*flame, (GLint) slices, (GLint) stacks);
-
-	glEnable(GL_BLEND);
-	glColor4f(1.0,1.0,0.0,0.8);
-	glutSolidCone((GLdouble) base+0.2, (GLdouble) (height+0.8)*flame, (GLint) slices, (GLint) stacks);
-	glDisable(GL_BLEND);
-	//glColor4f(1.0,1.0,0.0,1.0);
-}
-
-void missile()
-{
-	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
-	//glScalef(0.1, 0.1, 0.1);
-
-	nose();
-	glColor3f(1.0, 1.0, 1.0);
-	fuselage();
-	glColor3f(1.0, 0.0, 0.0);
-	fins();
-
-	flames();
-
-	glPopMatrix();
-   glEnable(GL_LIGHT1);
-}
-
-void wing()
-{
-	glBegin(GL_TRIANGLES);
-		glVertex3f(0.0, 0.0, 0.0);
-		glVertex3f(0.0, 4.0, 0.0);
-		glVertex3f(5.0, 4.0, 0.0);
-	glEnd();
-}
-
-void jet()
-{
-	glPushMatrix();
-	glColor3f(0.8, 0.8, 0.8);
-	glPushMatrix();
-	glScalef(2.0, 2.0, 2.0);
-	nose();
-	fuselage();
-	//glPopMatrix();
-
-	glPushMatrix();
-	glRotatef(90, 1.0, 0.0, 0.0);
-	glScalef(1.3, 1.3, 1.0);
-	glTranslatef(-7.0, -4.5, 0.0);
-   wing();
-	glPopMatrix();
-
-	glPushMatrix();
-	glRotatef(-90, 1.0, 0.0, 0.0);
-	glScalef(1.3, 1.3, 1.0);
-	glTranslatef(-7.0, -4.5, 0.0);
-   wing();
-	glPopMatrix();
-
-	flames();
-
-	glPopMatrix();
-}
-
-/*
  * The display callback
  */
 void display(void)
@@ -217,9 +86,16 @@ void display(void)
 	gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ); 
 
 	jet();
+
 	glTranslatef(15.0, -5.0, 0.0);
 	glScalef(0.2, 0.2, 0.2);
-	missile();
+	int i = 0;
+	while (i < display_missile);
+	{
+		missile();
+		printf("%d", i);
+		++i;
+	}
 
    glFlush ();
    // Never forget to swap buffers when GL_DOUBLE
@@ -242,8 +118,8 @@ void idle()
 	else
 		orbit_y = 0.0;
 		
-	//eyeX = 50.0*cos((float)orbit_x);
-	//eyeY = 50.0*sin((float)orbit_y);
+	eyeX = 50.0*cos((float)orbit_x);
+	eyeY = 50.0*sin((float)orbit_y);
 
 	if (flame >= 1.7)
 			  flame = 1.0;
@@ -274,6 +150,13 @@ void keys(unsigned char key, int x, int y)
 		case 'q':
 		{
 			exit(0);
+			break;
+		} 
+		case 'k':
+		{
+			//glTranslatef(15.0, -5.0, 0.0);
+			//glScalef(0.2, 0.2, 0.2);
+			display_missile += 1;
 			break;
 		} 
 	}
@@ -331,7 +214,7 @@ int main(int argc, char** argv)
 {
    glutInit(&argc, argv);
    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-   glutInitWindowSize (500, 500); 
+   glutInitWindowSize (700, 700); 
    glutInitWindowPosition (100, 100);
    glutCreateWindow (argv[0]);
    
@@ -341,7 +224,7 @@ int main(int argc, char** argv)
    glutKeyboardFunc(keys); 
    glutReshapeFunc(reshape);
 
-	/*int whole_shebang = glutCreateMenu(menu);
+	int whole_shebang = glutCreateMenu(menu);
 		glutAddMenuEntry("Above", 1);
 		glutAddMenuEntry("Below", 2);
 		glutAddMenuEntry("Side", 3);
@@ -352,7 +235,6 @@ int main(int argc, char** argv)
 		glutAddMenuEntry("Reset", 5);
 
    glutAttachMenu(GLUT_RIGHT_BUTTON);
-	*/
 
 	glutIdleFunc(idle);
 
