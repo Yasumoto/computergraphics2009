@@ -107,7 +107,7 @@ void jet()
 	fuselage();
 	//glPopMatrix();
 	cockpit();
-	glColor3f(0.8, 0.8, 0.8);
+	glColor3f(1.0, 1.0, 1.0);
 
 	glPushMatrix();
 	glRotatef(90, 1.0, 0.0, 0.0);
