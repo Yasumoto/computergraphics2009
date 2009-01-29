@@ -60,7 +60,6 @@ void cockpit()
    GLdouble eqn[4] = {0.0, 1.0, 0.0, 0.0};
    GLdouble eqn2[4] = {1.0, 0.0, 0.0, 0.0};
 
-   glColor3f (0.0, 0.0, 0.7);
    glPushMatrix();
    glTranslatef (-3.0, 0.8, 0.0);
 
@@ -70,6 +69,9 @@ void cockpit()
 /*    clip left half -- x < 0           */
    glClipPlane (GL_CLIP_PLANE1, eqn2);
    glEnable (GL_CLIP_PLANE1);
+
+	glEnable(GL_BLEND);
+	glColor4f(0.0,0.0,100.0,0.9);
 
    glRotatef (90.0, 1.0, 0.0, 0.0);
    glutSolidSphere(0.7, 20, 16);
@@ -85,6 +87,8 @@ void cockpit()
 
 	glTranslatef(0.0, 0.0, 2.0);
    glutSolidSphere(0.7, 20, 16);
+
+	glDisable(GL_BLEND);
 
    glDisable (GL_CLIP_PLANE0);
    glPopMatrix();
