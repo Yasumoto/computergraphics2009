@@ -55,7 +55,7 @@ void init(void)
 	// The position of the light
 	GLfloat light_position[] = { 5.0, 5.0, 5.0, 0.0 };
 
-   glClearColor (0.7, 0.7, 1.0, 0.1);
+   glClearColor (1.0, 1.0, 1.0, 1.0);
    glShadeModel (GL_SMOOTH);
 	
    glEnable(GL_COLOR_MATERIAL);
@@ -72,7 +72,6 @@ void init(void)
    // Turn on GL settings
    glEnable(GL_LIGHTING);
    glEnable(GL_LIGHT0);
-   glEnable(GL_LIGHT1);
    glEnable(GL_DEPTH_TEST);
 
 	// For more info on blending, see 231 in
@@ -105,6 +104,70 @@ void show_ready()
 	glPopMatrix();
 }
 
+void skyworld()
+{
+	glPushMatrix();
+	glScalef(1000.0, 1000.0, 1000.0);
+	glColor3f(1.0, 1.0, 1.0);
+   glBegin(GL_QUADS);		                // begin drawing a cube
+	glBindTexture(GL_TEXTURE_2D, skybox[2]);
+   
+   // Front Face (note that the texture's corners have to match the quad's corners)
+   glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);	// Bottom Left Of The Texture and Quad
+   glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);	// Bottom Right Of The Texture and Quad
+   glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);	// Top Right Of The Texture and Quad
+   glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);	// Top Left Of The Texture and Quad
+   glEnd();                                    // done with the polygon.
+   
+	glBindTexture(GL_TEXTURE_2D, skybox[0]);
+   glBegin(GL_QUADS);		                // begin drawing a cube
+   // Back Face
+   glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);	// Bottom Right Of The Texture and Quad
+   glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);	// Top Right Of The Texture and Quad
+   glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);	// Top Left Of The Texture and Quad
+   glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);	// Bottom Left Of The Texture and Quad
+   glEnd();                                    // done with the polygon.
+	
+	glBindTexture(GL_TEXTURE_2D, skybox[5]);
+   glBegin(GL_QUADS);		                // begin drawing a cube
+   // Top Face
+   glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);	// Top Left Of The Texture and Quad
+   glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f,  1.0f,  1.0f);	// Bottom Left Of The Texture and Quad
+   glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f,  1.0f,  1.0f);	// Bottom Right Of The Texture and Quad
+   glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);	// Top Right Of The Texture and Quad
+   glEnd();                                    // done with the polygon.
+   
+   glBegin(GL_QUADS);		                // begin drawing a cube
+	glBindTexture(GL_TEXTURE_2D, skybox[1]);
+   // Bottom Face       
+   glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);	// Top Right Of The Texture and Quad
+   glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f, -1.0f, -1.0f);	// Top Left Of The Texture and Quad
+   glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);	// Bottom Left Of The Texture and Quad
+   glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);	// Bottom Right Of The Texture and Quad
+   glEnd();                                    // done with the polygon.
+   
+	glBindTexture(GL_TEXTURE_2D, skybox[4]);
+   glBegin(GL_QUADS);		                // begin drawing a cube
+   // Right face
+   glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);	// Bottom Right Of The Texture and Quad
+   glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);	// Top Right Of The Texture and Quad
+   glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);	// Top Left Of The Texture and Quad
+   glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);	// Bottom Left Of The Texture and Quad
+   glEnd();                                    // done with the polygon.
+   
+	glBindTexture(GL_TEXTURE_2D, skybox[3]);
+   glBegin(GL_QUADS);		                // begin drawing a cube
+   // Left Face
+   glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);	// Bottom Left Of The Texture and Quad
+   glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);	// Bottom Right Of The Texture and Quad
+   glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);	// Top Right Of The Texture and Quad
+   glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);	// Top Left Of The Texture and Quad
+   
+   glEnd();                                    // done with the polygon.
+	glPopMatrix();
+}
+
+
 /*
  * The display callback
  */
@@ -117,6 +180,7 @@ void display(void)
 	glMatrixMode(GL_MODELVIEW);
 	gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ); 
 
+	skyworld();
 	jet();
 
 	glPopMatrix();
