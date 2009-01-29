@@ -77,15 +77,16 @@ int ImageLoad(char *filename, Image *image) {
 	printf("Error reading width from %s.\n", filename);
 	return 0;
     }
+    //TODO: Yeah, this probably isn't right......
     image->sizeX = 64;
-    printf("Width of %s: %lu\n", filename, image->sizeX);
+    //printf("Width of %s: %lu\n", filename, image->sizeX);
     
     // read the height 
     if ((i = fread(&image->sizeY, 4, 1, file)) != 1) {
 	printf("Error reading height from %s.\n", filename);
 	return 0;
     }
-    printf("Height of %s: %lu\n", filename, image->sizeY);
+    //printf("Height of %s: %lu\n", filename, image->sizeY);
     
     // calculate the size (assuming 24 bits or 3 bytes per pixel).
     size = image->sizeX * image->sizeY * 3;
@@ -301,7 +302,7 @@ void keys(unsigned char key, int x, int y)
 		{
 			//glTranslatef(15.0, -5.0, 0.0);
 			//glScalef(0.2, 0.2, 0.2);
-			display_missile += 1;
+			display_missile = 1;
 			break;
 		} 
 	}
@@ -355,6 +356,12 @@ void menu(GLint selected)
 	}
 }
 
+void clicks(int button, int state, int x, int y)
+{
+		  if(button == GLUT_LEFT_BUTTON)
+					 display_missile = 1;
+}
+
 int main(int argc, char** argv)
 {
    glutInit(&argc, argv);
@@ -367,6 +374,7 @@ int main(int argc, char** argv)
 
    glutDisplayFunc(display); 
    glutKeyboardFunc(keys); 
+	glutMouseFunc(clicks);
    glutReshapeFunc(reshape);
 
 	int whole_shebang = glutCreateMenu(menu);

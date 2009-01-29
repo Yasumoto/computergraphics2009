@@ -1,3 +1,13 @@
+The final project for Computer Graphics, Interterm 2009.
+Chapman University
+Joe Smith
+
+A relatively simple trial of various opengl features.
+
+To fire, click the left mouse button or press 'k'.
+
 Texture Mapping - Tux on the wings
 Blending - Flames/Explosion
 Clipping - Cockpit (Sphere + Cylinder + Sphere)
+Mouse + Keyboard Control - Rockets
+Menu - Different Views
