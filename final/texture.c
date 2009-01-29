@@ -13,7 +13,7 @@ int texture[1];
 
 // quick and dirty bitmap loader...for 24 bit bitmaps with 1 plane only.  
 // See http://www.dcs.ed.ac.uk/~mxr/gfx/2d/BMP.txt for more info.
-int ImageLoad(char *filename, Image *image) {
+int ImageLoad(char *filename, Image *image, int x) {
     FILE *file;
     unsigned long size;                 // size of the image in bytes.
     unsigned long i;                    // standard counter.
@@ -37,7 +37,7 @@ int ImageLoad(char *filename, Image *image) {
 	return 0;
     }
     //TODO: Yeah, this probably isn't right......
-    image->sizeX = 64;
+    image->sizeX = x;
     //printf("Width of %s: %lu\n", filename, image->sizeX);
     
     // read the height 
@@ -107,7 +107,7 @@ void LoadGLTextures() {
 	exit(0);
     }
 
-    if (!ImageLoad("linux.bmp", image1)) {
+    if (!ImageLoad("linux.bmp", image1, 64)) {
 	exit(1);
     }        
 
