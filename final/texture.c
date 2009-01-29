@@ -10,10 +10,11 @@ struct Image {
 typedef struct Image Image;
 /* storage for one texture  */
 int texture[1];
+int skybox[6];
 
 // quick and dirty bitmap loader...for 24 bit bitmaps with 1 plane only.  
 // See http://www.dcs.ed.ac.uk/~mxr/gfx/2d/BMP.txt for more info.
-int ImageLoad(char *filename, Image *image, int x) {
+int ImageLoad(char *filename, Image *image, int x, int y) {
     FILE *file;
     unsigned long size;                 // size of the image in bytes.
     unsigned long i;                    // standard counter.
@@ -45,10 +46,12 @@ int ImageLoad(char *filename, Image *image, int x) {
 	printf("Error reading height from %s.\n", filename);
 	return 0;
     }
+    image->sizeY = y;
     //printf("Height of %s: %lu\n", filename, image->sizeY);
     
     // calculate the size (assuming 24 bits or 3 bytes per pixel).
     size = image->sizeX * image->sizeY * 3;
+    //printf("%d\n", size);
 
     // read the planes
     if ((fread(&planes, 2, 1, file)) != 1) {
@@ -107,12 +110,84 @@ void LoadGLTextures() {
 	exit(0);
     }
 
-    if (!ImageLoad("linux.bmp", image1, 64)) {
+    Image *sky1;
+    sky1 = (Image *) malloc(sizeof(Image));
+    if (sky1 == NULL) {
+	printf("Error allocating space for image");
+	exit(0);
+    }
+
+    Image *sky2;
+    sky2 = (Image *) malloc(sizeof(Image));
+    if (sky2 == NULL) {
+	printf("Error allocating space for image");
+	exit(0);
+    }
+
+    Image *sky3;
+    sky3 = (Image *) malloc(sizeof(Image));
+    if (sky3 == NULL) {
+	printf("Error allocating space for image");
+	exit(0);
+    }
+
+    Image *sky4;
+    sky4 = (Image *) malloc(sizeof(Image));
+    if (sky4 == NULL) {
+	printf("Error allocating space for image");
+	exit(0);
+    }
+
+    Image *sky5;
+    sky5 = (Image *) malloc(sizeof(Image));
+    if (sky5 == NULL) {
+	printf("Error allocating space for image");
+	exit(0);
+    }
+
+    Image *sky6;
+    sky6 = (Image *) malloc(sizeof(Image));
+    if (sky6 == NULL) {
+	printf("Error allocating space for image");
+	exit(0);
+    }
+
+    if (!ImageLoad("images/linux.bmp", image1, 64, 128)) {
 	exit(1);
     }        
-
     // Create Texture	
     glGenTextures(1, &texture[0]);
+    
+    if (!ImageLoad("images/skybk.bmp", sky1, 512, 512)) {
+	exit(1);
+    }        
+    glGenTextures(1, &skybox[0]);
+
+    if (!ImageLoad("images/skydn.bmp", sky2, 512, 512)) {
+	exit(1);
+    }        
+    glGenTextures(1, &skybox[1]);
+    
+    if (!ImageLoad("images/skyft.bmp", sky3, 512, 512)) {
+	exit(1);
+    }        
+    glGenTextures(1, &skybox[2]);
+    
+    if (!ImageLoad("images/skylf.bmp", sky4, 512, 512)) {
+	exit(1);
+    }        
+    glGenTextures(1, &skybox[3]);
+    
+    if (!ImageLoad("images/skyrt.bmp", sky5, 512, 512)) {
+	exit(1);
+    }        
+    glGenTextures(1, &skybox[4]);
+    
+    if (!ImageLoad("images/skyup.bmp", sky6, 512, 512)) {
+	exit(1);
+    }        
+    glGenTextures(1, &skybox[5]);
+
     glBindTexture(GL_TEXTURE_2D, texture[0]);   // 2d texture (x and y size)
 
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR); // scale linearly when image bigger than texture
