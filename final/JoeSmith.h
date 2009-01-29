@@ -29,3 +29,5 @@
 
 extern float flame;
 extern float side;
+
+extern int texture[1];

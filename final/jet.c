@@ -48,10 +48,12 @@ void flames()
 
 void wing()
 {
+    glBindTexture(GL_TEXTURE_2D, texture[0]);   // choose the texture to use.
 	glBegin(GL_TRIANGLES);
-		glVertex3f(0.0, 0.0, 0.0);
-		glVertex3f(0.0, 4.0, 0.0);
-		glVertex3f(5.0, 4.0, 0.0);
+		glTexCoord2f(0.0, 0.0); glVertex3f(0.0, 0.0, 0.0);
+		glTexCoord2f(0.0, 1.0); glVertex3f(0.0, 4.0, 0.0);
+		glTexCoord2f(1.0, 1.0); glVertex3f(5.0, 4.0, 0.0);
+		glTexCoord2f(1.0, 0.0); //glVertex3f(0.0, 1.0, 1.0);
 	glEnd();
 }
 
