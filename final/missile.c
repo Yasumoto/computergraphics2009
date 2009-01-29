@@ -49,9 +49,17 @@ void fins()
 void explosion(float explode_x, int explode_awesomeness)
 {
 	glPushMatrix();
+	// The below 700 should probably
+	// be explode_x
+	glTranslatef(700, 0.0, -side*25.0);
+	// The tiny red core
 	glColor3f(1.0, 0.0, 0.0);
-	glTranslatef(explode_x, 0.0, 0.0);
-	glutSolidSphere((GLdouble) 5.5, (GLint)20, (GLint)20);
+	glutSolidSphere((GLdouble) explode_awesomeness*0.25, (GLint)20, (GLint)20);
+	// The expanding yellow
+	glEnable(GL_BLEND);
+	glColor4f(1.0,1.0,0.0,0.8);
+	glutSolidSphere((GLdouble) 500.0-explode_awesomeness, (GLint)20, (GLint)20);
+	glDisable(GL_BLEND);
 	glPopMatrix();
 }
 

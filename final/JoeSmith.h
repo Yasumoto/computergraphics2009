@@ -28,3 +28,4 @@
 #define WINDOW_HEIGHT HEIGHT
 
 extern float flame;
+extern float side;
