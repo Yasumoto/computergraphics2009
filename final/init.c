@@ -107,6 +107,7 @@ void show_ready()
 void skyworld()
 {
 	glPushMatrix();
+   glDisable(GL_LIGHTING);
 	glScalef(1000.0, 1000.0, 1000.0);
 	glColor3f(1.0, 1.0, 1.0);
 	glBindTexture(GL_TEXTURE_2D, skybox[4]);
@@ -164,6 +165,7 @@ void skyworld()
    glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);	// Top Left Of The Texture and Quad
    
    glEnd();                                    // done with the polygon.
+   glEnable(GL_LIGHTING);
 	glPopMatrix();
 }
 
