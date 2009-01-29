@@ -62,7 +62,7 @@ void cockpit()
 
    glColor3f (0.0, 0.0, 0.7);
    glPushMatrix();
-   glTranslatef (-3.0, 0.9, 0.0);
+   glTranslatef (-3.0, 0.8, 0.0);
 
 /*    clip lower half -- y < 0          */
    glClipPlane (GL_CLIP_PLANE0, eqn);
@@ -75,11 +75,18 @@ void cockpit()
    glutSolidSphere(0.7, 20, 16);
 
 
-   glDisable (GL_CLIP_PLANE0);
    glDisable (GL_CLIP_PLANE1);
+   glRotatef (-90.0, 1.0, 0.0, 0.0);
+   glRotatef (-90.0, 0.0, 1.0, 0.0);
+
 	GLUquadricObj *qobj;
 	qobj = gluNewQuadric();
-	gluCylinder(qobj, 10.0, 1.0, 2.0, 15, 15);
+	gluCylinder(qobj, 0.7, 0.7, 2.0, 15, 15);
+
+	glTranslatef(0.0, 0.0, 2.0);
+   glutSolidSphere(0.7, 20, 16);
+
+   glDisable (GL_CLIP_PLANE0);
    glPopMatrix();
 }
 
