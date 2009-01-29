@@ -206,6 +206,29 @@ void init(void)
    //glDisable(GL_LIGHTING);
 }
 
+void write_stroke(char* write)
+{
+	while (*write)
+		glutStrokeCharacter(GLUT_STROKE_MONO_ROMAN, *write++);
+}
+
+
+void show_ready()
+{
+	glPushMatrix();
+	//glLoadIdentity();
+	
+	glTranslatef(-25.0, 0.0, 5.0);
+	glRotatef(-90, 0.0, 1.0, 0.0);
+	glRotatef(-20, 1.0, 0.0, 0.0);
+	glScalef(0.01, 0.01, 0.01);
+
+	char* ready = "Ready!";
+	glColor3f(RED);
+	write_stroke(ready);
+	glPopMatrix();
+}
+
 /*
  * The display callback
  */
@@ -221,6 +244,8 @@ void display(void)
 	jet();
 
 	glPopMatrix();
+	if (!display_missile && eyeX == -50.0 && eyeY == 20.0)
+		show_ready();
 	//glTranslatef(10.0, -5.0, 0.0);
 	glScalef(0.3, 0.3, 0.3);
 	if (explode_awesomeness)
