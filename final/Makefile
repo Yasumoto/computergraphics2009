@@ -10,8 +10,8 @@ CC=gcc
 CFLAGS=-Wall -lglut
 .PHONY: clean
 
-jets: init.o missile.o jet.o
-	gcc -o jets -Wall -lglut init.o missile.o jet.o
+jets: init.o missile.o jet.o texture.o
+	gcc -o jets -Wall -lglut init.o missile.o jet.o texture.o
 
 init.o: init.c JoeSmith.h
 	gcc -c init.c
@@ -21,6 +21,9 @@ missile.o: missile.c JoeSmith.h
 
 jet.o: jet.c JoeSmith.h
 	gcc -c jet.c
+
+texture.o: texture.c JoeSmith.h
+	gcc -c texture.c
 
 clean:
 	rm -f jets *.o
