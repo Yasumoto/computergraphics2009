@@ -46,7 +46,7 @@ float explode_x = 0.0;
 
 float side = 1.0;
 
-float x_move = 0.0, y_move = 0.0;
+float x_move = 0.0, z_move = 0.0;
 
 /*  Initialize material property, light source, lighting model,
  *  and depth buffer.
@@ -194,10 +194,8 @@ void display(void)
 	glPushMatrix();
 	//y_move += 0.1;
 	//x_move += 0.1;
-	printf("XMove: %f\n", x_move);
-	printf("Y: %f\n", y_move);
         glRotatef(x_move, 1.0, 0.0, 0.0);
-        glRotatef(y_move, 0.0, 1.0, 0.0);
+        glRotatef(z_move, 0.0, 0.0, 1.0);
 
 	jet();
 
@@ -291,12 +289,12 @@ void keys(unsigned char key, int x, int y)
 		} 
 		case GLUT_KEY_UP:
 		{
-			x_move += 2.0;
+			z_move += 2.1;
 			break;
 		}
 		case GLUT_KEY_DOWN:
 		{
-			x_move -= 2.0;
+			z_move -= 2.1;
 			break;
 		}
 		case GLUT_KEY_LEFT:
