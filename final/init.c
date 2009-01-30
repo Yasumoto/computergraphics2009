@@ -15,6 +15,11 @@
 
 #include "JoeSmith.h"
 
+#define LEFT 	25
+#define RIGHT 	27
+#define UP	26
+#define DOWN	28
+
 /*
  * The following are used to control the camera
  */
@@ -40,6 +45,8 @@ int explode_awesomeness = 0;
 float explode_x = 0.0;
 
 float side = 1.0;
+
+float x_move = 0.0, y_move = 0.0;
 
 /*  Initialize material property, light source, lighting model,
  *  and depth buffer.
@@ -183,8 +190,18 @@ void display(void)
 	gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ); 
 
 	skyworld();
+
+	glPushMatrix();
+	//y_move += 0.1;
+	//x_move += 0.1;
+	printf("XMove: %f\n", x_move);
+	printf("Y: %f\n", y_move);
+        glRotatef(x_move, 1.0, 0.0, 0.0);
+        glRotatef(y_move, 0.0, 1.0, 0.0);
+
 	jet();
 
+	glPopMatrix();
 	glPopMatrix();
 	if (!display_missile && eyeX == -50.0 && eyeY == 20.0)
 		show_ready();
@@ -272,6 +289,26 @@ void keys(unsigned char key, int x, int y)
 			display_missile = 1;
 			break;
 		} 
+		case GLUT_KEY_UP:
+		{
+			x_move += 2.0;
+			break;
+		}
+		case GLUT_KEY_DOWN:
+		{
+			x_move -= 2.0;
+			break;
+		}
+		case GLUT_KEY_LEFT:
+		{
+			x_move -= 2.1;
+			break;
+		}
+		case GLUT_KEY_RIGHT:
+		{
+			x_move += 2.1;
+			break;
+		}
 	}
 }
 
@@ -286,7 +323,7 @@ void menu(GLint selected)
 			  case 1:
 			  {
 					eyeX = 0.0;
-					eyeY = 0.0;
+					eyeY = 35.0;
 					eyeZ = 200.0;
 					break;
 			  }
@@ -294,7 +331,7 @@ void menu(GLint selected)
 			  case 2:
 			  {
 					eyeX = 0.0;
-					eyeY = 0.0;
+					eyeY = 35.0;
 					eyeZ = -200.0;
 					break;
 			  }
@@ -347,6 +384,7 @@ int main(int argc, char** argv)
 
    glutDisplayFunc(display); 
    glutKeyboardFunc(keys); 
+	glutSpecialFunc(keys);
 	glutMouseFunc(clicks);
    glutReshapeFunc(reshape);
 
