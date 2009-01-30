@@ -15,11 +15,6 @@
 
 #include "JoeSmith.h"
 
-#define LEFT 	25
-#define RIGHT 	27
-#define UP	26
-#define DOWN	28
-
 /*
  * The following are used to control the camera
  */
@@ -47,6 +42,8 @@ float explode_x = 0.0;
 float side = 1.0;
 
 float x_move = 0.0, z_move = 0.0;
+
+int cool_moves = 1;
 
 /*  Initialize material property, light source, lighting model,
  *  and depth buffer.
@@ -191,16 +188,19 @@ void display(void)
 
 	skyworld();
 
-	glPushMatrix();
+	if (cool_moves > 0)
+		glPushMatrix();
 	//y_move += 0.1;
 	//x_move += 0.1;
         glRotatef(x_move, 1.0, 0.0, 0.0);
         glRotatef(z_move, 0.0, 0.0, 1.0);
 
 	jet();
+	glPopMatrix();
 
-	glPopMatrix();
-	glPopMatrix();
+	if (cool_moves > 0)
+		glPopMatrix();
+		
 	if (!display_missile && eyeX == -50.0 && eyeY == 20.0)
 		show_ready();
 	//glTranslatef(10.0, -5.0, 0.0);
@@ -353,8 +353,14 @@ void menu(GLint selected)
 					eyeY -= 150.0;
 					break;
 			  }
-			  //Reset
+			  // Cool Moves
 			  case 6:
+			  {
+				  cool_moves *= -1;
+				  break;
+			  }
+			  //Reset
+			  case 7:
 			  {
 					eyeX = -50.0;
 					eyeY = 20.0;
@@ -397,7 +403,8 @@ int main(int argc, char** argv)
 		glutAddSubMenu("Jet Views", whole_shebang);
 		glutAddMenuEntry("Move Up", 4);
 		glutAddMenuEntry("Move Down", 5);
-		glutAddMenuEntry("Reset", 6);
+		glutAddMenuEntry("Tracking", 6);
+		glutAddMenuEntry("Reset", 7);
 
    glutAttachMenu(GLUT_RIGHT_BUTTON);
 
