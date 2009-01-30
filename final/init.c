@@ -359,6 +359,8 @@ void menu(GLint selected)
 					eyeX = -50.0;
 					eyeY = 20.0;
 					eyeZ = 0.0;   
+					x_move = 0.0;
+					z_move = 0.0;
 					break;
 			  }
 	}
