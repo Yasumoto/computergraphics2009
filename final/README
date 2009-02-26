@@ -4,12 +4,18 @@ Joe Smith
 
 A relatively simple trial of various opengl features.
 
-To fire, click the left mouse button or press 'k'.
+CONTROLS
+-----------
+Q - Quit
+K - Launch Missile
+Left Click - Launch Missile
+Arrow Keys - Maneuver Jet
 
-Texture Mapping - Tux on the wings
-Blending - Flames/Explosion
+Texture Mapping - Tux on the wings (Skybox)
+Blending - Flames/Explosion/Cockpit
 Clipping - Cockpit (Sphere + Cylinder + Sphere)
-Mouse + Keyboard Control - Rockets
+Mouse + Keyboard Control - Rockets/Movement
 Menu - Different Views
 
 Skybox graphics from http://www.freebasic.net/forum/viewtopic.php?p=110440
+Code for loading bitmaps and getting it to run (only a few tweaks for my stuff) http://nehe.gamedev.net/data/lessons/lesson.asp?lesson=06

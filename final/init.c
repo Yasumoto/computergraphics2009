@@ -28,21 +28,32 @@ GLfloat upX = 0.0;
 GLfloat upY = 1.0;   
 GLfloat upZ = 0.0;;  
 
+// Used for some camera rotation
+// I had early on to check out my models
 float orbit_x = 0.0, orbit_y = 0.0;
 
+// The length of the flame from missiles
+// and the jet
 float flame = 1.0;
 
+// Did the user fire a missile?
 int display_missile = 0;
 
+// Begin translated 2.5 away
 float missile_distance = 2.5;
 
+// explosion
 int explode_awesomeness = 0;
 float explode_x = 0.0;
 
+// shoot missiles on different sides of the jet
 float side = 1.0;
 
+// for the plane to twist
 float x_move = 0.0, z_move = 0.0;
 
+// Used to set up "missile tracking"
+// (menu option)
 int cool_moves = 1;
 
 /*  Initialize material property, light source, lighting model,
@@ -85,6 +96,9 @@ void init(void)
    //glDisable(GL_LIGHTING);
 }
 
+/*
+ * Function to actually write a string to screen
+ */
 void write_stroke(char* write)
 {
 	while (*write)
@@ -92,6 +106,11 @@ void write_stroke(char* write)
 }
 
 
+/*
+ * Draw "Ready!" onto the lower right corner
+ * when the missile is engaged and prepared
+ * to fire
+ */
 void show_ready()
 {
 	glPushMatrix();
@@ -108,6 +127,10 @@ void show_ready()
 	glPopMatrix();
 }
 
+/*
+ * Crazy skybox code I found 
+ * online (not really that crazy, just a bunch of quads);
+ */
 void skyworld()
 {
 	glPushMatrix();
@@ -186,8 +209,11 @@ void display(void)
 	glMatrixMode(GL_MODELVIEW);
 	gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ); 
 
+	// Draw the sky box first, since everythiny 
+	// else should be drawn on top of it
 	skyworld();
 
+	// Missile Tracking enabled
 	if (cool_moves > 0)
 		glPushMatrix();
 	//y_move += 0.1;
@@ -205,20 +231,26 @@ void display(void)
 		show_ready();
 	//glTranslatef(10.0, -5.0, 0.0);
 	glScalef(0.3, 0.3, 0.3);
+	// To animate the explosion
 	if (explode_awesomeness)
 	{
 		explosion(explode_x, explode_awesomeness--);
 	}
+
+	// Missile has been launched
 	if (display_missile)
 	{
 		glTranslatef(missile_distance+=0.3, 0.0, side*25.0);
 		missile();
+		// TIme to explode
 		if (missile_distance >= 700.0)
 		{
+			// Explode where missile was launched
 			explode_x = missile_distance;
 			explode_awesomeness = 500;
 			missile_distance = 3.0;
 			display_missile = 0;
+			// Switch to launch missile on other side of the jet
 			side *= -1.0;
 		}
 	}
@@ -284,9 +316,11 @@ void keys(unsigned char key, int x, int y)
 		{
 			//glTranslatef(15.0, -5.0, 0.0);
 			//glScalef(0.2, 0.2, 0.2);
+			// Bombs away!
 			display_missile = 1;
 			break;
 		} 
+		// These rotate the jet
 		case GLUT_KEY_UP:
 		{
 			z_move += 2.1;
@@ -354,6 +388,7 @@ void menu(GLint selected)
 					break;
 			  }
 			  // Cool Moves
+			  // (missile tracking)
 			  case 6:
 			  {
 				  cool_moves *= -1;
@@ -372,6 +407,9 @@ void menu(GLint selected)
 	}
 }
 
+/*
+ * Fire a missile when left mouse button is clicked
+ */
 void clicks(int button, int state, int x, int y)
 {
 		  if(button == GLUT_LEFT_BUTTON)

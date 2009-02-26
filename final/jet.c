@@ -18,6 +18,9 @@ void fuselage()
 	glPopMatrix();
 }
 
+/*
+ * A Cone
+ */
 void nose()
 {
 	glPushMatrix();
@@ -28,6 +31,10 @@ void nose()
 	glPopMatrix();
 }
 
+/*
+ * Set up a translucent yellow cone and a red one
+ * inside, then animate to look like a jet engine
+ */
 void flames()
 {
 	glColor3f(1.0, 0.0, 0.0);
@@ -46,6 +53,7 @@ void flames()
 }
 
 
+//A triangle
 void wing()
 {
     glBindTexture(GL_TEXTURE_2D, texture[0]);   // choose the texture to use.
@@ -57,6 +65,9 @@ void wing()
 	glEnd();
 }
 
+/*
+ * Experiments in clipping (and blending (it is glass, afterall))- A sphhere, cylinder, then another sphere
+ */
 void cockpit()
 {
    GLdouble eqn[4] = {0.0, 1.0, 0.0, 0.0};
@@ -97,6 +108,10 @@ void cockpit()
 }
 
 
+/*
+ * Take care of all the rotations,
+ * and model each piece
+ */
 void jet()
 {
 	glPushMatrix();

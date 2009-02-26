@@ -1,5 +1,12 @@
 #include "JoeSmith.h"
 
+//
+// /////
+// I'm very thankful for http://nehe.gamedev.net/data/lessons/lesson.asp?lesson=06
+// /////
+//
+
+
 /* Image type - contains height, width, and data * One of the contributions from http://nehe.gamedev.net/data/lessons/lesson.asp?lesson=06
  */
 struct Image {

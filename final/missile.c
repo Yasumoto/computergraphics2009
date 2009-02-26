@@ -6,17 +6,21 @@
 
 #include "JoeSmith.h"
 
+/*
+ * Very simple
+ */
 void fin(float* v1, float* v2, float* v3)
 {
-	glPushMatrix();
 	glBegin(GL_TRIANGLES);
 		glVertex3fv(v1);
 		glVertex3fv(v2);
 		glVertex3fv(v3);
 	glEnd();
-	glPopMatrix();
 }
 
+/*
+ * Model the fins
+ */
 void fins()
 {
 	glPushMatrix();
@@ -46,6 +50,9 @@ void fins()
 	glPopMatrix();
 }
 
+/*
+ * More blending, decently epic
+ */
 void explosion(float explode_x, int explode_awesomeness)
 {
 	glPushMatrix();
